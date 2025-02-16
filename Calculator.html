@@ -3,43 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Calculator</title>
     <style>
-        .bb{
-            background-color: green;
-            color: white;
-            width: 200px;
-            height: 100px;
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4);
+            font-family: Arial, sans-serif;
+        }
+        .calculator {
+            width: 320px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            background: white;
             text-align: center;
-           border-top: 10px solid red;
-           border-right: 15px solid yellow;
-           border-bottom: 8px solid pink;
-           border-left: 30px solid black;
-            padding: 10px 20px  ;
-            margin: 10px 5px 20px 30px ;
         }
-        .aa{
-            background-color: rgb(248, 243, 243);
-            width: 400px;
-            height: 300px;
-            border: 5px solid red;
-            margin-top: 30px;
+        .display {
+            width: 90%;
+            height: 60px;
+            font-size: 2em;
+            text-align: right;
+            padding: 10px;
+            border: none;
+            background: #f1f1f1;
+            border-radius: 10px;
+            margin-bottom: 15px;
         }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            width: 90%;
+            height: 60px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .operator { background: #ff7675; color: white; }
+        .number { background: #74b9ff; color: white; }
+        .equal { background: #55efc4; color: white; }
+        .clear { background: #fdcb6e; color: white; }
+        button:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
-        <div class="bb">
-            welcome to our channel
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="operator" onclick="appendValue('/')">/</button>
+            <button class="operator" onclick="appendValue('*')">*</button>
+            <button class="operator" onclick="appendValue('-')">-</button>
+            <button class="number" onclick="appendValue('7')">7</button>
+            <button class="number" onclick="appendValue('8')">8</button>
+            <button class="number" onclick="appendValue('9')">9</button>
+            <button class="operator" onclick="appendValue('+')">+</button>
+            <button class="number" onclick="appendValue('4')">4</button>
+            <button class="number" onclick="appendValue('5')">5</button>
+            <button class="number" onclick="appendValue('6')">6</button>
+            <button class="equal" onclick="calculate()">=</button>
+            <button class="number" onclick="appendValue('1')">1</button>
+            <button class="number" onclick="appendValue('2')">2</button>
+            <button class="number" onclick="appendValue('3')">3</button>
+            <button class="number" onclick="appendValue('0')">0</button>
+            <button class="number" onclick="appendValue('.')">.</button>
         </div>
+    </div>
 
-<div class="aa">
-    <video src="5. How applicant will apply for Admission Campaign V2.mp4" controls width="200px" height="100px">
-<br>
-<audio src="Allah De Bandeya - B Praak _ Jaani _ .mp3" controls>
-
-</audio>
-</div>
-
-</video>
+    <script>
+        function appendValue(value) {
+            document.getElementById('display').value += value;
+        }
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+        function calculate() {
+            try {
+                document.getElementById('display').value = eval(document.getElementById('display').value);
+            } catch {
+                document.getElementById('display').value = 'Error';
+            }
+        }
+    </script>
 </body>
 </html>
