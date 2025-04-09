@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my site</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: rgb(32, 31, 24);
+            display: flex;
+            justify-content: center;
+            justify-content: center;
+            height: 100px;
+        }
+
+        .subcontainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #cs {
+            display: flex;
+            gap: 300px;
+            font-size: 20px;
+            list-style: none;
+            color: rgb(255, 255, 255);
+        }
+
+        #links>a {
+            text-decoration: none;
+            color: white;
+            padding: 10px;
+        }
+
+        #links>a:hover {
+            text-decoration: underline red;
+        }
+
+        .cardcontainer {
+            background-color: rgb(240, 202, 128);
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+
+
+        }
+
+        .card {
+            background-color: rgb(241, 241, 247);
+            width: 800px;
+            height: 800px;
+            border-radius: 30px;
+            box-shadow: 1px 1px 20px black;
+            position: relative;
+            top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        footer{
+            background-color: black;
+            position: relative;
+            top: 80px;
+            color: white;
+            text-align: center;
+            padding: 10px;
+
+        
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="subcontainer">
+            <nav>
+                <ul id="cs">
+                    <li>
+                        <p>Code Solution</p>
+                    </li>
+                    <div id="links">
+                        <a href="#">Home</a>
+                        <a href="#">About Us</a>
+                        <a href="#">Contact Us</a>
+                        <a href="#">Email</a>
+                    </div>
+                </ul>
+
+            </nav>
+
+
+        </div>
+
+    </div>
+
+    </div>
+    <div class="cardcontainer">
+        <div class="card">
+            <div> <br>
+                <h1>Frontend Development</h1>
+                <ul>
+                <li>
+                    HTML
+                </li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>Angular</li>
+                <li>Jquerry</li>
+            </ul> <br>
+            <img src="fed.png" alt="fed" width="400px" style="border-radius: 20px; box-shadow: 1px 1px 15px ;">
+            <br> <br>
+            <div>
+                <h1>Backend Development</h1>
+                <ul>
+                    <li>Python</li>
+                    <li>Framework Django</li>
+                    <li>Server-side logic, database management, application logic</li>
+                    <li>Data processing, API development, authentication, security</li>
+                </ul> <br>
+                <img src="gettyimages-1422276740-612x612.jpg" alt="bed"  width="400px" style="border-radius: 20px; box-shadow: 1px 1px 15px ;" >
+            </div>
+            <footer>
+                <p>Developed By Nadeem Khan IT Team. </p>
+            </footer>
+        </div>
+
+ 
+
+
+
+
+</body>
+
+</html>
