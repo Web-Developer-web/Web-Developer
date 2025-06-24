@@ -1,204 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Experience Certificate Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rain</title>
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #e0eafc, #cfdef3);
-      overflow-x: hidden;
+      padding: 0;
+      box-sizing: border-box;
     }
-
-    .form-container, .certificate-container {
-      max-width: 900px;
-      margin: 50px auto;
-      padding: 30px;
-      background-color: white;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      border-radius: 15px;
-      position: relative;
+    body {
+      overflow: hidden;
+      font-family: 'Noto Nastaliq Urdu', serif;
+      background: linear-gradient(to bottom, #87ceeb, #ffffff);
+      transition: background 5s ease-in-out;
     }
-
-    h1 {
-      text-align: center;
-      font-size: 3rem;
-      color: #333;
-    }
-
-    .form-field {
-      margin-bottom: 20px;
-    }
-
-    .form-field label {
-      font-size: 1.3rem;
-      display: block;
-      margin-bottom: 10px;
-    }
-
-    .form-field input {
+    .sky {
       width: 100%;
-      padding: 12px;
-      font-size: 1.1rem;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-    }
-
-    #generateBtn {
-      background-color: #4CAF50;
-      color: white;
-      padding: 15px 25px;
-      font-size: 1.3rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      display: block;
-      margin: 30px auto 0;
-    }
-
-    #generateBtn:hover {
-      background-color: #45a049;
-    }
-
-    .certificate {
-      display: none;
-      text-align: center;
-      padding: 40px;
-      background: linear-gradient(45deg, #fdfbfb, #ebedee);
-      border-radius: 15px;
+      height: 100vh;
       position: relative;
       overflow: hidden;
     }
-
-    .certificate h2 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      color: #1a237e;
+    h1 {
+      font-size: 2rem;
+      padding: 1rem;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.4);
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+      text-align: center;
+      animation: moveText 10s ease-in-out infinite alternate;
+      text-shadow: 0 0 10px #fff, 0 0 20px #00f, 0 0 30px #0ff;
     }
-
-    .certificate p {
+    @keyframes moveText {
+      0% { transform: translateX(-10%); }
+      100% { transform: translateX(10%); }
+    }
+    .start-btn {
+      position: absolute;
+      z-index: 11;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      background: #004466;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
       font-size: 1.2rem;
-      margin: 10px 0;
-      color: #333;
+      cursor: pointer;
+      transition: background 0.3s;
     }
-
-    .animated-circle {
+    .start-btn:hover {
+      background: #006688;
+    }
+    .raindrop, .bubble {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.6);
+    }
+    .raindrop {
+      width: 2px;
+      height: 15px;
+      animation: fall 2s linear infinite;
+    }
+    .bubble {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      animation: bubble 2s ease-out forwards;
+    }
+    @keyframes fall {
+      0% { top: -20px; opacity: 1; }
+      100% { top: 100vh; opacity: 0; }
+    }
+    @keyframes bubble {
+      0% { transform: scale(0.5); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+    .cloud {
+      position: absolute;
+      top: 50px;
+      width: 200px;
+      height: 60px;
+      background: #fff;
+      border-radius: 50%;
+      filter: blur(10px);
+      opacity: 0.6;
+      z-index: 5;
+      animation: moveClouds 30s linear infinite;
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+    }
+    .cloud::before {
       width: 100px;
       height: 100px;
-      border-radius: 50%;
-      background: radial-gradient(circle at center, #4dd0e1, #00796b);
-      position: absolute;
-      animation: float 6s ease-in-out infinite;
-      opacity: 0.4;
+      top: -30px;
+      left: 30px;
     }
-
-    .animated-circle:nth-child(1) {
-      top: -50px;
-      left: -50px;
-      animation-delay: 0s;
+    .cloud::after {
+      width: 80px;
+      height: 80px;
+      top: -20px;
+      left: 100px;
     }
-
-    .animated-circle:nth-child(2) {
-      top: 200px;
-      right: -50px;
-      animation-delay: 1s;
-    }
-
-    .animated-circle:nth-child(3) {
-      bottom: -50px;
-      left: 150px;
-      animation-delay: 2s;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(20px);
-      }
-    }
-
-    .photo {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 5px solid #00796b;
-      margin-bottom: 20px;
+    @keyframes moveClouds {
+      0% { left: -250px; }
+      100% { left: 110%; }
     }
   </style>
 </head>
 <body>
-  <div class="form-container" id="formContainer">
-    <h1>Generate Your Experience Certificate</h1>
-    <div class="form-field">
-      <label for="photoInput">Upload Your Photo</label>
-      <input type="file" id="photoInput" accept="image/*">
-    </div>
-    <div class="form-field">
-      <label for="name">Your Name</label>
-      <input type="text" id="name">
-    </div>
-    <div class="form-field">
-      <label for="fatherName">Father's Name</label>
-      <input type="text" id="fatherName">
-    </div>
-    <div class="form-field">
-      <label for="address">Address</label>
-      <input type="text" id="address">
-    </div>
-    <div class="form-field">
-      <label for="profession">Profession</label>
-      <input type="text" id="profession" value="Information Technology">
-    </div>
-    <button id="generateBtn">Generate Certificate</button>
-  </div>
-
-  <div class="certificate-container certificate" id="certificateContainer">
-    <div class="animated-circle"></div>
-    <div class="animated-circle"></div>
-    <div class="animated-circle"></div>
-    <h2>✨ Experience Certificate ✨</h2>
-    <img id="certPhoto" class="photo" src="" alt="User Photo">
-    <p id="certName"></p>
-    <p id="certFatherName"></p>
-    <p id="certAddress"></p>
-    <p id="certProfession"></p>
-    <p>This is to certify that the above-mentioned individual has a rich experience and commendable contribution in the field of <strong>Information Technology</strong>.</p>
+  <div class="sky" id="sky">
+    <h1>اللہ رحمت کی بارش برسائے</h1>
+    <button class="start-btn" onclick="startRain()">Start the Rain</button>
   </div>
 
   <script>
-    const generateBtn = document.getElementById('generateBtn');
-    const formContainer = document.getElementById('formContainer');
-    const certificateContainer = document.getElementById('certificateContainer');
-    const photoInput = document.getElementById('photoInput');
+    function startRain() {
+      const sky = document.getElementById('sky');
+      sky.style.background = 'linear-gradient(to bottom, #444, #222)';
 
-    generateBtn.addEventListener('click', () => {
-      const name = document.getElementById('name').value;
-      const fatherName = document.getElementById('fatherName').value;
-      const address = document.getElementById('address').value;
-      const profession = document.getElementById('profession').value;
-
-      document.getElementById('certName').textContent = `Name: ${name}`;
-      document.getElementById('certFatherName').textContent = `Father's Name: ${fatherName}`;
-      document.getElementById('certAddress').textContent = `Address: ${address}`;
-      document.getElementById('certProfession').textContent = `Profession: ${profession}`;
-
-      const file = photoInput.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.getElementById('certPhoto').src = e.target.result;
-        };
-        reader.readAsDataURL(file);
+      for (let i = 0; i < 3; i++) {
+        let cloud = document.createElement('div');
+        cloud.className = 'cloud';
+        cloud.style.top = (30 + i * 60) + 'px';
+        cloud.style.animationDuration = (20 + i * 5) + 's';
+        sky.appendChild(cloud);
       }
 
-      formContainer.style.display = 'none';
-      certificateContainer.style.display = 'block';
-    });
+      for (let i = 0; i < 400; i++) {
+        let drop = document.createElement('div');
+        drop.className = 'raindrop';
+        drop.style.left = Math.random() * 100 + 'vw';
+        drop.style.animationDuration = (1 + Math.random()) + 's';
+        sky.appendChild(drop);
+
+        setTimeout(() => {
+          let bubble = document.createElement('div');
+          bubble.className = 'bubble';
+
+          const size = 8 + Math.random() * 15;
+          bubble.style.width = size + 'px';
+          bubble.style.height = size + 'px';
+
+          bubble.style.left = drop.style.left;
+          bubble.style.bottom = '0';
+          sky.appendChild(bubble);
+          setTimeout(() => bubble.remove(), 2000);
+        }, 3000 * Math.random());
+      }
+    }
   </script>
 </body>
 </html>
