@@ -1,88 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Glowing Keyboard</title>
-<style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: radial-gradient(circle at center, #0f0f0f, #000);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Segoe UI', sans-serif;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wahid Copier Corner and IT Solution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-.keyboard {
-  display: grid;
-  grid-template-columns: repeat(14, 50px);
-  grid-gap: 10px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 20px;
-  box-shadow: 0 0 60px rgba(0, 255, 180, 0.2);
-}
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-.key {
-  height: 50px;
-  background: #111;
-  border: none;
-  color: #0ff;
-  font-size: 16px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,255,255,0.3);
-  transition: transform 0.1s, box-shadow 0.2s;
-  text-transform: uppercase;
-}
+        body {
+            background: #0a0a0a;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
 
-.key:active {
-  transform: scale(0.95);
-  box-shadow: 0 0 20px rgba(0,255,255,0.6);
-}
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
 
-.key.wide {
-  grid-column: span 2;
-}
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            animation: float 15s infinite linear;
+        }
 
-.key.extra-wide {
-  grid-column: span 5;
-}
+        .shape:nth-child(1) {
+            background: #ff0055;
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            left: -100px;
+            animation-duration: 20s;
+        }
 
-.key.shift {
-  grid-column: span 3;
-}
+        .shape:nth-child(2) {
+            background: #00ffaa;
+            width: 300px;
+            height: 300px;
+            bottom: -100px;
+            right: -100px;
+            animation-duration: 25s;
+            animation-delay: 2s;
+        }
 
-.key.space {
-  grid-column: span 6;
-}
-</style>
+        .shape:nth-child(3) {
+            background: #5500ff;
+            width: 500px;
+            height: 500px;
+            top: 50%;
+            left: 50%;
+            animation-duration: 30s;
+            animation-delay: 4s;
+        }
+
+        .shape:nth-child(4) {
+            background: #ffff00;
+            width: 350px;
+            height: 350px;
+            bottom: 20%;
+            right: 30%;
+            animation-duration: 18s;
+            animation-delay: 1s;
+        }
+
+        .business-card {
+            width: 350px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+            z-index: 10;
+        }
+
+        .business-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%);
+            pointer-events: none;
+        }
+
+        .card-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, #ff0055, #00ffaa, #5500ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .logo p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .services {
+            margin: 20px 0;
+        }
+
+        .services h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #00ffaa;
+            position: relative;
+            display: inline-block;
+        }
+
+        .services h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, #00ffaa, transparent);
+        }
+
+        .services ul {
+            list-style: none;
+        }
+
+        .services li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .services li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #ff0055;
+            font-size: 20px;
+            line-height: 14px;
+        }
+
+        .contact h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #5500ff;
+            position: relative;
+            display: inline-block;
+        }
+
+        .contact h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, #5500ff, transparent);
+        }
+
+        .contact p {
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact i {
+            margin-right: 10px;
+            color: #ffff00;
+            font-size: 16px;
+        }
+
+        .address {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: float 10s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        .circle-1 {
+            width: 100px;
+            height: 100px;
+            top: -30px;
+            right: -30px;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 60px;
+            height: 60px;
+            bottom: -20px;
+            left: -20px;
+            animation-delay: 2s;
+        }
+
+        .circle-3 {
+            width: 40px;
+            height: 40px;
+            top: 50%;
+            left: -20px;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(10px, 10px) rotate(5deg);
+            }
+            50% {
+                transform: translate(20px, -10px) rotate(-5deg);
+            }
+            75% {
+                transform: translate(-10px, 10px) rotate(5deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .business-card {
+                width: 90%;
+                height: auto;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="keyboard" id="keyboard"></div>
-<script>
-const rows = [
-  ["esc", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11", "f12", "del"],
-  ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace"],
-  ["tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\"],
-  ["caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "enter"],
-  ["shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "shift"],
-  ["ctrl", "win", "alt", "space", "alt", "fn", "ctrl", "←", "↑", "↓", "→"]
-];
+    <div class="bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
 
-const keyboard = document.getElementById("keyboard");
+    <div class="business-card" id="businessCard">
+        <div class="floating-circle circle-1"></div>
+        <div class="floating-circle circle-2"></div>
+        <div class="floating-circle circle-3"></div>
+        
+        <div class="card-content">
+            <div>
+                <div class="logo">
+                    <h1>Wahid Copier Corner</h1>
+                    <p>and IT Solution</p>
+                </div>
 
-rows.forEach(row => {
-  row.forEach(key => {
-    const k = document.createElement("button");
-    k.className = "key";
-    k.textContent = key;
-    if (["tab", "caps", "enter", "backspace"].includes(key)) k.classList.add("wide");
-    if (["shift"].includes(key)) k.classList.add("shift");
-    if (key === "space") k.classList.add("space");
-    keyboard.appendChild(k);
-  });
-});
-</script>
+                <div class="services">
+                    <h2>Our Services</h2>
+                    <ul>
+                        <li>Online Services</li>
+                        <li>Graphics Designing</li>
+                        <li>Photostat</li>
+                        <li>Printing</li>
+                        <li>Assignment</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <div class="contact">
+                    <h2>Contact Us</h2>
+                    <p><i>📞</i> 0348-0006320</p>
+                    <p><i>📞</i> 0313-9629340</p>
+                    <p><i>✉️</i> infotech6320@gmail.com</p>
+                </div>
+
+                <div class="address">
+                    <p>Wari Bazar Near Zong Tower</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const card = document.getElementById('businessCard');
+        
+        document.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        document.addEventListener('mouseleave', () => {
+            card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        });
+
+        const shapes = document.querySelectorAll('.shape');
+        shapes.forEach((shape, index) => {
+            const randomX = Math.random() * 100 - 50;
+            const randomY = Math.random() * 100 - 50;
+            shape.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            
+            const duration = 15 + Math.random() * 15;
+            shape.style.animationDuration = `${duration}s`;
+            
+            if (index % 2 === 0) {
+                shape.style.animation = `float ${duration}s infinite ease-in-out, pulse ${5 + Math.random() * 5}s infinite ease-in-out`;
+            }
+        });
+
+        const circles = document.querySelectorAll('.floating-circle');
+        circles.forEach((circle, index) => {
+            const duration = 8 + Math.random() * 10;
+            circle.style.animationDuration = `${duration}s`;
+        });
+
+        function addGlitter() {
+            const glitter = document.createElement('div');
+            glitter.style.position = 'absolute';
+            glitter.style.width = '5px';
+            glitter.style.height = '5px';
+            glitter.style.backgroundColor = 'white';
+            glitter.style.borderRadius = '50%';
+            glitter.style.boxShadow = '0 0 10px 2px rgba(255, 255, 255, 0.8)';
+            glitter.style.left = Math.random() * 100 + 'vw';
+            glitter.style.top = Math.random() * 100 + 'vh';
+            glitter.style.opacity = '0';
+            glitter.style.transform = 'scale(0)';
+            glitter.style.transition = 'all 1s ease-out';
+            
+            document.body.appendChild(glitter);
+            
+            setTimeout(() => {
+                glitter.style.opacity = '0.8';
+                glitter.style.transform = 'scale(1)';
+            }, 10);
+            
+            setTimeout(() => {
+                glitter.style.opacity = '0';
+                glitter.style.transform = 'scale(0) translate(' + (Math.random() * 200 - 100) + 'px, ' + (Math.random() * 200 - 100) + 'px)';
+            }, 1000);
+            
+            setTimeout(() => {
+                glitter.remove();
+            }, 2000);
+        }
+        
+        // Add glitter every 300ms
+        setInterval(addGlitter, 300);
+    </script>
 </body>
 </html>
