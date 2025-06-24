@@ -1,241 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Info Tech AI</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            display: flex;
-            min-height: 100vh;
-            overflow: hidden;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-        }
-        
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .panel {
-            width: 300px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            border-right: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .panel-header {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .profile {
-            margin-top: auto;
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-        
-        .profile-logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-weight: bold;
-            color: #e73c7e;
-            font-size: 20px;
-        }
-        
-        .profile-info {
-            color: white;
-        }
-        
-        .profile-name {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .profile-role {
-            font-size: 12px;
-            opacity: 0.8;
-        }
-        
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-        }
-        
-        .prompt-container {
-            width: 100%;
-            max-width: 800px;
-            position: relative;
-        }
-        
-        .prompt-input {
-            width: 100%;
-            padding: 20px;
-            border-radius: 50px;
-            border: none;
-            outline: none;
-            font-size: 18px;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .prompt-input:focus {
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .submit-btn {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            background: linear-gradient(45deg, #e73c7e, #23a6d5);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        
-        .submit-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .output-container {
-            width: 100%;
-            max-width: 800px;
-            margin-top: 40px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 20px;
-            padding: 30px;
-            max-height: 500px;
-            overflow-y: auto;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .output-text {
-            line-height: 1.6;
-            color: #333;
-        }
-        
-        .typing {
-            display: inline-block;
-        }
-        
-        .typing::after {
-            content: '|';
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Glowing Keyboard</title>
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at center, #0f0f0f, #000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(14, 50px);
+  grid-gap: 10px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 20px;
+  box-shadow: 0 0 60px rgba(0, 255, 180, 0.2);
+}
+
+.key {
+  height: 50px;
+  background: #111;
+  border: none;
+  color: #0ff;
+  font-size: 16px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,255,255,0.3);
+  transition: transform 0.1s, box-shadow 0.2s;
+  text-transform: uppercase;
+}
+
+.key:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 20px rgba(0,255,255,0.6);
+}
+
+.key.wide {
+  grid-column: span 2;
+}
+
+.key.extra-wide {
+  grid-column: span 5;
+}
+
+.key.shift {
+  grid-column: span 3;
+}
+
+.key.space {
+  grid-column: span 6;
+}
+</style>
 </head>
 <body>
-    <div class="panel">
-        <div class="panel-header">Info Tech AI</div>
-        <div class="profile">
-            <div class="profile-logo"><img src="mpic.jpg" alt="" width="70px" height="70px" style="border-radius: 50%;"></div>
-            <div class="profile-info">
-                <div class="profile-name">User Profile</div>
-                <div class="profile-role">AI Assistant</div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="main-content">
-        <div class="prompt-container">
-            <input type="text" class="prompt-input" placeholder="Enter your prompt here..." id="promptInput">
-            <button class="submit-btn" id="submitBtn">Generate</button>
-        </div>
-        
-        <div class="output-container">
-            <div class="output-text" id="outputText"></div>
-        </div>
-    </div>
+<div class="keyboard" id="keyboard"></div>
+<script>
+const rows = [
+  ["esc", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11", "f12", "del"],
+  ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace"],
+  ["tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\"],
+  ["caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "enter"],
+  ["shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "shift"],
+  ["ctrl", "win", "alt", "space", "alt", "fn", "ctrl", "←", "↑", "↓", "→"]
+];
 
-    <script>
-        const promptInput = document.getElementById('promptInput');
-        const submitBtn = document.getElementById('submitBtn');
-        const outputText = document.getElementById('outputText');
-        
-        const responses = {
-            "letter": "Dear [Recipient],\n\nI hope this letter finds you well. I am writing to [purpose of the letter]. [Main content of the letter].\n\nThank you for your time and consideration.\n\nSincerely,\n[Your Name]",
-            "application": "Subject: Application for [Position Name]\n\nDear [Hiring Manager's Name],\n\nI am excited to apply for the [Position Name] at [Company Name]. With my background in [relevant experience], I am confident in my ability to [specific contribution].\n\nIn my previous role at [Previous Company], I [specific achievement]. I possess skills in [relevant skills] which align well with your requirements.\n\nI would welcome the opportunity to discuss how my qualifications align with your needs. Thank you for your consideration.\n\nBest regards,\n[Your Name]",
-            "story": "Once upon a time, in a land far away, there lived a [character]. This [character] had always dreamed of [goal]. One day, [inciting incident]. Despite the challenges, the [character] persevered and learned that [moral of the story]. And so, the [character] lived [conclusion].",
-            "poem": "Roses are red,\nViolets are blue,\n[Custom line 1],\n[Custom line 2].\n\nThe sun shines bright,\nThe stars twinkle at night,\n[Your thoughts here],\nIn poetic light."
-        };
-        
-        const defaultResponse = "Here is some generated text based on your request. AI can assist with creating various types of content including letters, applications, stories, and more. Please be specific in your prompt for better results. The possibilities are endless when we combine human creativity with artificial intelligence capabilities.";
-        
-        submitBtn.addEventListener('click', generateText);
-        promptInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') generateText();
-        });
-        
-        function generateText() {
-            const prompt = promptInput.value.toLowerCase();
-            let response = defaultResponse;
-            
-            if (prompt.includes('letter')) {
-                response = responses.letter;
-            } else if (prompt.includes('application') || prompt.includes('job')) {
-                response = responses.application;
-            } else if (prompt.includes('story') || prompt.includes('tale')) {
-                response = responses.story;
-            } else if (prompt.includes('poem') || prompt.includes('poetry')) {
-                response = responses.poem;
-            }
-            
-            outputText.innerHTML = '';
-            typeWriter(response);
-        }
-        
-        function typeWriter(text, i = 0) {
-            if (i < text.length) {
-                outputText.innerHTML = text.substring(0, i + 1) + '<span class="typing"></span>';
-                setTimeout(() => typeWriter(text, i + 1), 20);
-            } else {
-                outputText.innerHTML = text;
-            }
-        }
-    </script>
+const keyboard = document.getElementById("keyboard");
+
+rows.forEach(row => {
+  row.forEach(key => {
+    const k = document.createElement("button");
+    k.className = "key";
+    k.textContent = key;
+    if (["tab", "caps", "enter", "backspace"].includes(key)) k.classList.add("wide");
+    if (["shift"].includes(key)) k.classList.add("shift");
+    if (key === "space") k.classList.add("space");
+    keyboard.appendChild(k);
+  });
+});
+</script>
 </body>
 </html>
