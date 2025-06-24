@@ -1,163 +1,310 @@
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rain</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      overflow: hidden;
-      font-family: 'Noto Nastaliq Urdu', serif;
-      background: linear-gradient(to bottom, #87ceeb, #ffffff);
-      transition: background 5s ease-in-out;
-    }
-    .sky {
-      width: 100%;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-    }
-    h1 {
-      font-size: 2rem;
-      padding: 1rem;
-      color: #ffffff;
-      background: rgba(0, 0, 0, 0.4);
-      position: absolute;
-      top: 0;
-      width: 100%;
-      z-index: 10;
-      text-align: center;
-      animation: moveText 10s ease-in-out infinite alternate;
-      text-shadow: 0 0 10px #fff, 0 0 20px #00f, 0 0 30px #0ff;
-    }
-    @keyframes moveText {
-      0% { transform: translateX(-10%); }
-      100% { transform: translateX(10%); }
-    }
-    .start-btn {
-      position: absolute;
-      z-index: 11;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 12px 24px;
-      background: #004466;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .start-btn:hover {
-      background: #006688;
-    }
-    .raindrop, .bubble {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.6);
-    }
-    .raindrop {
-      width: 2px;
-      height: 15px;
-      animation: fall 2s linear infinite;
-    }
-    .bubble {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.5);
-      animation: bubble 2s ease-out forwards;
-    }
-    @keyframes fall {
-      0% { top: -20px; opacity: 1; }
-      100% { top: 100vh; opacity: 0; }
-    }
-    @keyframes bubble {
-      0% { transform: scale(0.5); opacity: 1; }
-      100% { transform: scale(1.5); opacity: 0; }
-    }
-    .cloud {
-      position: absolute;
-      top: 50px;
-      width: 200px;
-      height: 60px;
-      background: #fff;
-      border-radius: 50%;
-      filter: blur(10px);
-      opacity: 0.6;
-      z-index: 5;
-      animation: moveClouds 30s linear infinite;
-    }
-    .cloud::before, .cloud::after {
-      content: '';
-      position: absolute;
-      background: #fff;
-      border-radius: 50%;
-    }
-    .cloud::before {
-      width: 100px;
-      height: 100px;
-      top: -30px;
-      left: 30px;
-    }
-    .cloud::after {
-      width: 80px;
-      height: 80px;
-      top: -20px;
-      left: 100px;
-    }
-    @keyframes moveClouds {
-      0% { left: -250px; }
-      100% { left: 110%; }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Garden Login/Sign Up</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to top, #0a0a0a 40%, #1c0f3f 100%);
+        }
+
+        .sky,
+        .stars,
+        .sunset,
+        .hills,
+        .garden {
+            position: absolute;
+            width: 100%;
+        }
+
+        .sky {
+            height: 50%;
+            background: radial-gradient(circle at bottom, #ff6e40 0%, #1c0f3f 80%);
+            z-index: 1;
+        }
+
+        .stars {
+            height: 100%;
+            box-shadow: 20px 30px white, 50px 100px white, 150px 120px white,
+                200px 50px white, 300px 80px white, 400px 60px white;
+            animation: twinkle 4s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from {
+                opacity: 0.5;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .sunset {
+            height: 100px;
+            width: 100px;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            background: radial-gradient(circle, #ffcc33, #ff9966);
+            border-radius: 50%;
+            animation: sunMove 10s infinite alternate;
+            z-index: 2;
+        }
+
+        @keyframes sunMove {
+            0% {
+                bottom: 20px;
+                opacity: 1;
+            }
+
+            100% {
+                bottom: -50px;
+                opacity: 0.4;
+            }
+        }
+
+        .hills {
+            bottom: 20%;
+            height: 30%;
+            background: radial-gradient(circle at 50% 100%, #223322, #111822);
+            filter: blur(4px);
+            z-index: 2;
+        }
+
+        .garden {
+            bottom: 0;
+            height: 30%;
+            background: linear-gradient(to top, #0f2f0f 40%, transparent);
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding: 0 30px;
+            z-index: 3;
+        }
+
+        .light {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ffeb3b;
+            box-shadow: 0 0 10px 4px #ffee58;
+            animation: glow 2s infinite ease-in-out;
+            position: relative;
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.4);
+            }
+        }
+
+        .login-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 40px;
+            transform: translateY(-50%);
+            z-index: 10;
+            perspective: 1000px;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .toggle-buttons button {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            border: none;
+            background: #ff9966;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-buttons button:hover {
+            background: #ff6e40;
+        }
+
+        .login-box {
+            width: 360px;
+            height: 320px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            opacity: 0;
+            max-height: 0;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease, opacity 0.5s, max-height 0.5s;
+        }
+
+        .login-box.active {
+            opacity: 1;
+            max-height: 600px;
+        }
+
+        .login-box.flipped {
+            transform: rotateX(180deg);
+        }
+
+        .form-container {
+            padding: 20px;
+            color: white;
+            backface-visibility: hidden;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            font-weight: normal;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 8px;
+            color: white;
+        }
+
+        .form-container input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-container button.submit {
+            width: 100%;
+            padding: 10px;
+            background: #ff9966;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .form-container small {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .form-container .hidden {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
-  <div class="sky" id="sky">
-    <h1>اللہ رحمت کی بارش برسائے</h1>
-    <button class="start-btn" onclick="startRain()">Start the Rain</button>
-  </div>
+    <div class="sky">
+        <div class="stars"></div>
+        <div class="sunset"></div>
+    </div>
+    <div class="hills"></div>
+    <div class="garden" id="garden">
+        <div class="light" style="animation-delay: 0s;"></div>
+        <div class="light" style="animation-delay: 1s;"></div>
+        <div class="light" style="animation-delay: 2s;"></div>
+    </div>
 
-  <script>
-    function startRain() {
-      const sky = document.getElementById('sky');
-      sky.style.background = 'linear-gradient(to bottom, #444, #222)';
+    <div class="login-wrapper">
+        <div class="toggle-buttons">
+            <button onclick="showForm('login')">Login</button>
+            <button onclick="showForm('signup')">Sign Up</button>
+        </div>
+        <div class="login-box" id="loginBox">
+            <div class="form-container">
+                <h2 id="formTitle">Welcome Back</h2>
+                <form id="loginForm">
+                    <input type="text" placeholder="Username" required />
+                    <input type="password" placeholder="Password" required />
+                    <button class="submit">Login</button>
+                </form>
+                <form id="signupForm" class="hidden">
+                    <input type="text" placeholder="Username" required />
+                    <input type="email" placeholder="Email" required />
+                    <input type="password" placeholder="Password" required />
+                    <button class="submit">Sign Up</button>
+                </form>
+                <small id="toggleHint">New here? Click Sign Up above.</small>
+            </div>
+        </div>
+    </div>
 
-      for (let i = 0; i < 3; i++) {
-        let cloud = document.createElement('div');
-        cloud.className = 'cloud';
-        cloud.style.top = (30 + i * 60) + 'px';
-        cloud.style.animationDuration = (20 + i * 5) + 's';
-        sky.appendChild(cloud);
-      }
+    <script>
+        const loginBox = document.getElementById('loginBox');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const formTitle = document.getElementById('formTitle');
+        const toggleHint = document.getElementById('toggleHint');
 
-      for (let i = 0; i < 400; i++) {
-        let drop = document.createElement('div');
-        drop.className = 'raindrop';
-        drop.style.left = Math.random() * 100 + 'vw';
-        drop.style.animationDuration = (1 + Math.random()) + 's';
-        sky.appendChild(drop);
+        let isOpen = false;
+        let currentForm = 'login';
 
-        setTimeout(() => {
-          let bubble = document.createElement('div');
-          bubble.className = 'bubble';
+        function showForm(form) {
+            if (!isOpen) {
+                loginBox.classList.add('active');
+                isOpen = true;
+            }
 
-          const size = 8 + Math.random() * 15;
-          bubble.style.width = size + 'px';
-          bubble.style.height = size + 'px';
+            if (form === currentForm) return;
 
-          bubble.style.left = drop.style.left;
-          bubble.style.bottom = '0';
-          sky.appendChild(bubble);
-          setTimeout(() => bubble.remove(), 2000);
-        }, 3000 * Math.random());
-      }
-    }
-  </script>
+            loginBox.classList.add('flipped');
+
+            setTimeout(() => {
+                if (form === 'login') {
+                    loginForm.classList.remove('hidden');
+                    signupForm.classList.add('hidden');
+                    formTitle.innerText = 'Welcome Back';
+                    toggleHint.innerText = 'New here? Click Sign Up above.';
+                } else {
+                    signupForm.classList.remove('hidden');
+                    loginForm.classList.add('hidden');
+                    formTitle.innerText = 'Create Account';
+                    toggleHint.innerText = 'Already have an account? Click Login above.';
+                }
+
+                currentForm = form;
+                loginBox.classList.remove('flipped');
+            }, 400);
+        }
+
+        const garden = document.getElementById('garden');
+        for (let i = 0; i < 10; i++) {
+            const light = document.createElement('div');
+            light.className = 'light';
+            light.style.left = `${Math.random() * 90}%`;
+            light.style.bottom = `${Math.random() * 50}px`;
+            light.style.animationDelay = `${Math.random() * 3}s`;
+            garden.appendChild(light);
+        }
+    </script>
 </body>
+
 </html>
