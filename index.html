@@ -1,365 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Large Cafeteria Hub - Invoice</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Atishbazi Fireworks Show</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
+    html, body {
       margin: 0;
       padding: 0;
-      background: #f2f2f2;
+      overflow: hidden;
+      background: black;
+      font-family: 'Segoe UI', sans-serif;
     }
 
-    header {
-      background-color: #ff6347;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      animation: slideIn 1s ease-out;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 3em;
-    }
-
-    .container {
-      width: 80%;
-      margin: 20px auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
+    canvas {
       display: block;
-      font-size: 1.2em;
-      color: #333;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 2px solid #ddd;
-      border-radius: 5px;
-      font-size: 1.1em;
-      box-sizing: border-box;
-    }
-
-    .food-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: space-between;
-    }
-
-    .food-item {
-      background-color: #f8f8f8;
-      padding: 10px;
-      width: 45%;
-      border-radius: 8px;
-      text-align: center;
-      transition: transform 0.3s ease;
-    }
-
-    .food-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .food-item input {
-      margin-top: 10px;
-      width: 50px;
-      font-size: 1.2em;
-      text-align: center;
-    }
-
-    .submit-btn {
-      background-color: #ff6347;
+    .start-btn {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 20px 40px;
+      font-size: 24px;
       color: white;
-      padding: 15px 25px;
+      background: linear-gradient(45deg, #ff4e50, #f9d423);
       border: none;
-      font-size: 1.5em;
+      border-radius: 50px;
       cursor: pointer;
-      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      animation: glow 2s infinite alternate;
+      z-index: 10;
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 10px #ff4e50, 0 0 20px #f9d423;
+      }
+      100% {
+        box-shadow: 0 0 25px #f9d423, 0 0 40px #ff4e50;
+      }
+    }
+
+    .start-btn:hover {
+      transform: translateX(-50%) scale(1.05);
+    }
+
+    .bottom-lights {
+      position: absolute;
+      bottom: 100px;
+      left: 0;
       width: 100%;
-      transition: background-color 0.3s;
+      height: 8px;
+      background: linear-gradient(90deg, transparent, #ff4e50, #f9d423, transparent);
+      background-size: 200% 100%;
+      animation: moveLights 3s linear infinite;
+      opacity: 0.7;
+      z-index: 5;
+      filter: blur(2px);
     }
 
-    .submit-btn:hover {
-      background-color: #ff4500;
+    @keyframes moveLights {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
     }
 
-    .invoice {
-      margin-top: 30px;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-      display: none;
-    }
-
-    .invoice-header {
-      font-size: 2em;
-      color: #ff6347;
-      margin-bottom: 20px;
+    .celebration-text {
+      position: absolute;
+      bottom: 120px;
+      width: 100%;
+      font-size: 32px;
+      font-weight: bold;
+      color: #f9d423;
       text-align: center;
+      text-shadow: 0 0 10px #ff4e50, 0 0 20px #f9d423;
+      animation: moveCelebration 1.5s infinite alternate ease-in-out;
+      z-index: 6;
+      pointer-events: none;
     }
 
-    .invoice-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-
-    .invoice-table th, .invoice-table td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-      font-size: 1.1em;
-    }
-
-    .invoice-table th {
-      background-color: #f4f4f4;
-    }
-
-    .invoice-total {
-      text-align: center;
-      font-size: 1.5em;
-      color: #ff6347;
-      margin-top: 10px;
-    }
-
-    .customer-details {
-      margin-bottom: 20px;
-      font-size: 1.2em;
-    }
-
-    .print-btn {
-      display: block;
-      background-color: #28a745;
-      color: white;
-      padding: 15px 25px;
-      border: none;
-      font-size: 1.5em;
-      cursor: pointer;
-      border-radius: 10px;
-      width: 100%;
-      margin-top: 20px;
-      transition: background-color 0.3s;
-    }
-
-    .print-btn:hover {
-      background-color: #218838;
-    }
-
-    @keyframes slideIn {
-      from {
-        transform: translateY(-50%);
+    @keyframes moveCelebration {
+      0% {
+        transform: translateX(-25%);
       }
-      to {
-        transform: translateY(0);
-      }
-    }
-
-    @media print {
-      body {
-        margin: 0;
-        padding: 0;
-      }
-
-      .container, .invoice {
-        width: 100%;
-        padding: 10px;
-        box-shadow: none;
-      }
-
-      .food-list {
-        display: block;
-      }
-
-      .food-item {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-
-      .submit-btn, .print-btn {
-        display: none;
-      }
-
-      .invoice-header {
-        font-size: 2.5em;
-        text-align: center;
-      }
-
-      .invoice-table th, .invoice-table td {
-        font-size: 1.2em;
+      100% {
+        transform: translateX(25%);
       }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Large Cafeteria Hub</h1>
-</header>
+  <canvas id="fireworks"></canvas>
 
-<div class="container" id="form-container">
-  <h2>Customer Details</h2>
-  <div class="form-group">
-    <label for="name">Customer Name:</label>
-    <input type="text" id="name" placeholder="Enter your name">
-  </div>
-  <div class="form-group">
-    <label for="contact">Contact Number:</label>
-    <input type="text" id="contact" placeholder="Enter your contact number">
-  </div>
-  <div class="form-group">
-    <label for="address">Address:</label>
-    <input type="text" id="address" placeholder="Enter your address">
-  </div>
+  <div class="bottom-lights"></div>
 
-  <h2>Food Items</h2>
-  <div class="food-list">
-    <div class="food-item">
-      <label>Tea (Rs. 50)</label>
-      <input type="number" id="tea" value="0">
-    </div>
-    <div class="food-item">
-      <label>Bread (Rs. 30)</label>
-      <input type="number" id="bread" value="0">
-    </div>
-    <div class="food-item">
-      <label>Parata (Rs. 60)</label>
-      <input type="number" id="parata" value="0">
-    </div>
-    <div class="food-item">
-      <label>Chicken Piece (Rs. 150)</label>
-      <input type="number" id="chicken" value="0">
-    </div>
-    <div class="food-item">
-      <label>Rice Plate (Rs. 100)</label>
-      <input type="number" id="rice" value="0">
-    </div>
-    <div class="food-item">
-      <label>Juice (Rs. 70)</label>
-      <input type="number" id="juice" value="0">
-    </div>
-    <div class="food-item">
-      <label>Fish (Rs. 200)</label>
-      <input type="number" id="fish" value="0">
-    </div>
-  </div>
+  <div class="celebration-text">Celebration</div>
 
-  <button class="submit-btn" onclick="generateInvoice()">Generate Invoice</button>
-</div>
+  <button class="start-btn" id="startBtn">Start Atish Bazi</button>
 
-<div class="invoice" id="invoice">
-  <div class="invoice-header">
-    Invoice - Large Cafeteria Hub
-  </div>
-  <div class="customer-details" id="customer-details"></div>
-  <table class="invoice-table">
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Quantity</th>
-        <th>Price (PKR)</th>
-      </tr>
-    </thead>
-    <tbody id="invoice-items"></tbody>
-  </table>
-  <div class="invoice-total" id="invoice-total">
-    Total: Rs. 0
-  </div>
+  <script>
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    const startBtn = document.getElementById('startBtn');
 
-  <button class="print-btn" onclick="window.print()">Print Invoice</button>
-</div>
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-<script>
-  const prices = {
-    tea: 50,
-    bread: 30,
-    parata: 60,
-    chicken: 150,
-    rice: 100,
-    juice: 70,
-    fish: 200
-  };
-
-  function generateInvoice() {
-    const name = document.getElementById('name').value;
-    const contact = document.getElementById('contact').value;
-    const address = document.getElementById('address').value;
-
-    const teaQty = document.getElementById('tea').value;
-    const breadQty = document.getElementById('bread').value;
-    const parataQty = document.getElementById('parata').value;
-    const chickenQty = document.getElementById('chicken').value;
-    const riceQty = document.getElementById('rice').value;
-    const juiceQty = document.getElementById('juice').value;
-    const fishQty = document.getElementById('fish').value;
-
-    let total = 0;
-    const invoiceItems = [];
-    
-    if (teaQty > 0) {
-      invoiceItems.push(['Tea', teaQty, teaQty * prices.tea]);
-      total += teaQty * prices.tea;
-    }
-    if (breadQty > 0) {
-      invoiceItems.push(['Bread', breadQty, breadQty * prices.bread]);
-      total += breadQty * prices.bread;
-    }
-    if (parataQty > 0) {
-      invoiceItems.push(['Parata', parataQty, parataQty * prices.parata]);
-      total += parataQty * prices.parata;
-    }
-    if (chickenQty > 0) {
-      invoiceItems.push(['Chicken Piece', chickenQty, chickenQty * prices.chicken]);
-      total += chickenQty * prices.chicken;
-    }
-    if (riceQty > 0) {
-      invoiceItems.push(['Rice Plate', riceQty, riceQty * prices.rice]);
-      total += riceQty * prices.rice;
-    }
-    if (juiceQty > 0) {
-      invoiceItems.push(['Juice', juiceQty, juiceQty * prices.juice]);
-      total += juiceQty * prices.juice;
-    }
-    if (fishQty > 0) {
-      invoiceItems.push(['Fish', fishQty, fishQty * prices.fish]);
-      total += fishQty * prices.fish;
-    }
-
-    let invoiceContent = '';
-    invoiceItems.forEach(item => {
-      invoiceContent += `<tr><td>${item[0]}</td><td>${item[1]}</td><td>Rs. ${item[2]}</td></tr>`;
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     });
 
-    document.getElementById('invoice-items').innerHTML = invoiceContent;
-    document.getElementById('invoice-total').innerText = `Total: Rs. ${total}`;
-    
-    document.getElementById('customer-details').innerHTML = `
-      <strong>Name:</strong> ${name} <br>
-      <strong>Contact:</strong> ${contact} <br>
-      <strong>Address:</strong> ${address} <br>
-    `;
+    class Firework {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.particles = [];
+        this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
 
-    // Hide the form and show the invoice
-    document.getElementById('form-container').style.display = 'none';
-    document.getElementById('invoice').style.display = 'block';
-  }
-</script>
+        for (let i = 0; i < 150; i++) {
+          this.particles.push({
+            x: this.x,
+            y: this.y,
+            angle: Math.random() * 2 * Math.PI,
+            speed: Math.random() * 5 + 2,
+            radius: Math.random() * 1 + 1,
+            alpha: 1,
+            decay: Math.random() * 0.1 + 0.0,
+          });
+        }
+      }
 
+      update() {
+        this.particles.forEach(p => {
+          p.x += Math.cos(p.angle) * p.speed;
+          p.y += Math.sin(p.angle) * p.speed;
+          p.alpha -= p.decay;
+        });
+        this.particles = this.particles.filter(p => p.alpha > 0);
+      }
+
+      draw() {
+        this.particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+          ctx.fillStyle = `rgba(${this.hexToRgb(this.color)}, ${p.alpha})`;
+          ctx.fill();
+        });
+      }
+
+      hexToRgb(hsl) {
+        const tmp = document.createElement('div');
+        tmp.style.color = hsl;
+        document.body.appendChild(tmp);
+        const rgb = getComputedStyle(tmp).color;
+        document.body.removeChild(tmp);
+        return rgb.match(/\d+/g).slice(0, 3).join(', ');
+      }
+    }
+
+    let fireworks = [];
+    let isStarted = false;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      fireworks.forEach(fw => {
+        fw.update();
+        fw.draw();
+      });
+
+      fireworks = fireworks.filter(fw => fw.particles.length > 0);
+    }
+
+    function launchFireworks() {
+      setInterval(() => {
+        for (let i = 0; i < 3; i++) {
+          const x = Math.random() * canvas.width;
+          const y = Math.random() * canvas.height / 2;
+          fireworks.push(new Firework(x, y));
+        }
+      }, 500);
+    }
+
+    startBtn.addEventListener('click', () => {
+      if (!isStarted) {
+        isStarted = true;
+        startBtn.style.display = 'none';
+        launchFireworks();
+        animate();
+      }
+    });
+  </script>
 </body>
 </html>
