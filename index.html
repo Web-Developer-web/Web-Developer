@@ -1,203 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Atishbazi Fireworks Show</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: black;
-      font-family: 'Segoe UI', sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photos Circle Slider</title>
+    <style>
+        body{
+            background-image: url(photo.jpg);
+            background-repeat:no-repeat;
+            background-size: cover;
+            backdrop-filter:blur(5px);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        img{
+            height: 350px;
+            width: 200px;
+        }
+        .container{
+            width: 200px;
+            height: 350px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            animation: gallery 30s linear infinite;
+            cursor: pointer;
+        }
+        .container span{
+            position: absolute;
+            gap: 10px;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateY(calc(var(--i)*45deg)) translateZ(500px);
+            -webkit-box-reflect: belwo 2.5px linear-gradient
+            (transparent,transparent, rgba(3,3,3,0));   
+        }
+        .container span img{
+            position:absolute;
+            border-radius: 10px;
+            border: 6px ridge #ccc;
+        }
+        @keyframes gallery {
+            0%{
+                transform: perspective(1000px) rotateX(0deg);
+            }
+            100%{
+                transform: perspective(1000px) rotateY(360deg);
+            }
+            
+        }
 
-    canvas {
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-
-    .start-btn {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 20px 40px;
-      font-size: 24px;
-      color: white;
-      background: linear-gradient(45deg, #ff4e50, #f9d423);
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-      animation: glow 2s infinite alternate;
-      z-index: 10;
-    }
-
-    @keyframes glow {
-      0% {
-        box-shadow: 0 0 10px #ff4e50, 0 0 20px #f9d423;
-      }
-      100% {
-        box-shadow: 0 0 25px #f9d423, 0 0 40px #ff4e50;
-      }
-    }
-
-    .start-btn:hover {
-      transform: translateX(-50%) scale(1.05);
-    }
-
-    .bottom-lights {
-      position: absolute;
-      bottom: 100px;
-      left: 0;
-      width: 100%;
-      height: 8px;
-      background: linear-gradient(90deg, transparent, #ff4e50, #f9d423, transparent);
-      background-size: 200% 100%;
-      animation: moveLights 3s linear infinite;
-      opacity: 0.7;
-      z-index: 5;
-      filter: blur(2px);
-    }
-
-    @keyframes moveLights {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    .celebration-text {
-      position: absolute;
-      bottom: 120px;
-      width: 100%;
-      font-size: 32px;
-      font-weight: bold;
-      color: #f9d423;
-      text-align: center;
-      text-shadow: 0 0 10px #ff4e50, 0 0 20px #f9d423;
-      animation: moveCelebration 1.5s infinite alternate ease-in-out;
-      z-index: 6;
-      pointer-events: none;
-    }
-
-    @keyframes moveCelebration {
-      0% {
-        transform: translateX(-25%);
-      }
-      100% {
-        transform: translateX(25%);
-      }
-    }
-  </style>
+    </style>
 </head>
 <body>
+    <div class="container">
 
-  <canvas id="fireworks"></canvas>
+    <span style="--i:1"><img src="one.jpg" alt=""></span>
+    <span style="--i:2"><img src="two.jpg" alt=""></span>
+    <span style="--i:3"><img src="three.jpg" alt=""></span>
+    <span style="--i:4"><img src="four.jpg" alt=""></span>
+    <span style="--i:5"><img src="five.jpg" alt=""></span>
+    <span style="--i:6"><img src="six.jpg" alt=""></span>
 
-  <div class="bottom-lights"></div>
-
-  <div class="celebration-text">Celebration</div>
-
-  <button class="start-btn" id="startBtn">Start Atish Bazi</button>
-
-  <script>
-    const canvas = document.getElementById('fireworks');
-    const ctx = canvas.getContext('2d');
-    const startBtn = document.getElementById('startBtn');
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-
-    class Firework {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.particles = [];
-        this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
-
-        for (let i = 0; i < 150; i++) {
-          this.particles.push({
-            x: this.x,
-            y: this.y,
-            angle: Math.random() * 2 * Math.PI,
-            speed: Math.random() * 5 + 2,
-            radius: Math.random() * 1 + 1,
-            alpha: 1,
-            decay: Math.random() * 0.1 + 0.0,
-          });
-        }
-      }
-
-      update() {
-        this.particles.forEach(p => {
-          p.x += Math.cos(p.angle) * p.speed;
-          p.y += Math.sin(p.angle) * p.speed;
-          p.alpha -= p.decay;
-        });
-        this.particles = this.particles.filter(p => p.alpha > 0);
-      }
-
-      draw() {
-        this.particles.forEach(p => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
-          ctx.fillStyle = `rgba(${this.hexToRgb(this.color)}, ${p.alpha})`;
-          ctx.fill();
-        });
-      }
-
-      hexToRgb(hsl) {
-        const tmp = document.createElement('div');
-        tmp.style.color = hsl;
-        document.body.appendChild(tmp);
-        const rgb = getComputedStyle(tmp).color;
-        document.body.removeChild(tmp);
-        return rgb.match(/\d+/g).slice(0, 3).join(', ');
-      }
-    }
-
-    let fireworks = [];
-    let isStarted = false;
-
-    function animate() {
-      requestAnimationFrame(animate);
-      ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      fireworks.forEach(fw => {
-        fw.update();
-        fw.draw();
-      });
-
-      fireworks = fireworks.filter(fw => fw.particles.length > 0);
-    }
-
-    function launchFireworks() {
-      setInterval(() => {
-        for (let i = 0; i < 3; i++) {
-          const x = Math.random() * canvas.width;
-          const y = Math.random() * canvas.height / 2;
-          fireworks.push(new Firework(x, y));
-        }
-      }, 500);
-    }
-
-    startBtn.addEventListener('click', () => {
-      if (!isStarted) {
-        isStarted = true;
-        startBtn.style.display = 'none';
-        launchFireworks();
-        animate();
-      }
-    });
-  </script>
+    </div>
+    
 </body>
 </html>
